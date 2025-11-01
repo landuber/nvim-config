@@ -1,0 +1,14 @@
+# Backup files
+*.backup
+*.bak
+*~
+
+# Swap files
+*.swp
+*.swo
+
+# Undo history
+.netrwhist
+
+# Empty directories
+modular_lua/
