@@ -7,12 +7,28 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        -- Use uvx-powered formatters for Python
+        -- Python: uvx-powered formatters
         python = { "uvx_ruff_format", "uvx_black" },
-        -- System tools for non-Python
+        -- C/C++
         cpp    = { "clang-format" },
         c      = { "clang-format" },
+        -- Lua
         lua    = { "stylua" },
+        -- Rust (rustfmt is handled by rust-analyzer)
+        rust   = { "rustfmt" },
+        -- JavaScript/TypeScript
+        javascript       = { "prettier" },
+        javascriptreact  = { "prettier" },
+        typescript       = { "prettier" },
+        typescriptreact  = { "prettier" },
+        -- Web
+        html   = { "prettier" },
+        css    = { "prettier" },
+        scss   = { "prettier" },
+        json   = { "prettier" },
+        jsonc  = { "prettier" },
+        yaml   = { "prettier" },
+        markdown = { "prettier" },
       },
       -- Define uvx-backed formatters
       formatters = {

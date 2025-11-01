@@ -18,7 +18,13 @@ return {
         ignore_exitcode = true,
       }
 
-      lint.linters_by_ft = { python = { "uvx_ruff" } }
+      lint.linters_by_ft = {
+        python = { "uvx_ruff" },
+        javascript = { "eslint_d" },
+        javascriptreact = { "eslint_d" },
+        typescript = { "eslint_d" },
+        typescriptreact = { "eslint_d" },
+      }
 
       vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
         callback = function() require("lint").try_lint() end,

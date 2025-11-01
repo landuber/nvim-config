@@ -111,13 +111,39 @@ return {
       vim.keymap.set("n", "<leader>dr", function() require("dap").repl.open() end,
         { desc = "DAP REPL" })
 
-      -- Ensure debugpy via Mason
+      -- Ensure debuggers via Mason
       require("mason-nvim-dap").setup({
-        ensure_installed = { "python" },
+        ensure_installed = { "python", "codelldb", "node2" },
         automatic_setup = true,
+        handlers = {
+          function(config)
+            require("mason-nvim-dap").default_setup(config)
+          end,
+        },
       })
       local venv_python = vim.fn.getcwd() .. "/.venv/bin/python"
       require("dap-python").setup(vim.fn.executable(venv_python) == 1 and venv_python or "python3")
+
+      -- Node.js/TypeScript debugging
+      dap.adapters.node2 = {
+        type = "executable",
+        command = "node",
+        args = { vim.fn.stdpath("data") .. "/mason/packages/node-debug2-adapter/out/src/nodeDebug.js" },
+      }
+
+      dap.configurations.javascript = {
+        {
+          type = "node2",
+          request = "launch",
+          program = "${file}",
+          cwd = vim.fn.getcwd(),
+          sourceMaps = true,
+          protocol = "inspector",
+          console = "integratedTerminal",
+        },
+      }
+
+      dap.configurations.typescript = dap.configurations.javascript
 
       -- Helper: project python
       local function project_python()

@@ -9,6 +9,8 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "nvim-neotest/neotest-python",
+      "nvim-neotest/neotest-jest",
+      "rouge8/neotest-rust",
     },
     config = function()
       local neotest = require("neotest")
@@ -30,6 +32,17 @@ return {
             dap = { justMyCode = true },
             pytest_discover_instances = true,
             args = { "-q" },
+          }),
+          require("neotest-jest")({
+            jestCommand = "npm test --",
+            jestConfigFile = "jest.config.js",
+            env = { CI = true },
+            cwd = function()
+              return vim.fn.getcwd()
+            end,
+          }),
+          require("neotest-rust")({
+            args = { "--no-capture" },
           }),
         },
         quickfix = { enabled = false, open = false },

@@ -22,7 +22,17 @@ return {
       local mlsp = require("mason-lspconfig")
 
       mlsp.setup({
-        ensure_installed = { "basedpyright", "clangd", "lua_ls" },
+        ensure_installed = {
+          "basedpyright",  -- Python
+          "clangd",        -- C/C++
+          "lua_ls",        -- Lua
+          "ts_ls",         -- TypeScript/JavaScript
+          "rust_analyzer", -- Rust
+          "html",          -- HTML
+          "cssls",         -- CSS
+          "jsonls",        -- JSON
+          "tailwindcss",   -- Tailwind CSS
+        },
 
         handlers = {
           -- default handler
@@ -63,6 +73,30 @@ return {
               },
             })
           end,
+
+          -- TypeScript/JavaScript: custom config
+          ["ts_ls"] = function()
+            require("lspconfig").ts_ls.setup({
+              capabilities = capabilities,
+              settings = {
+                typescript = {
+                  inlayHints = {
+                    includeInlayParameterNameHints = "all",
+                    includeInlayFunctionParameterTypeHints = true,
+                  },
+                },
+                javascript = {
+                  inlayHints = {
+                    includeInlayParameterNameHints = "all",
+                    includeInlayFunctionParameterTypeHints = true,
+                  },
+                },
+              },
+            })
+          end,
+
+          -- Rust: Disable in favor of rustaceanvim
+          ["rust_analyzer"] = function() end,
         },
       })
     end,
